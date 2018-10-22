@@ -110,6 +110,28 @@ class Filesystem implements FilesystemInterface
     }
 
     /**
+     * Exactly the same as write, but does not check if the file exists (and 
+     * therefore always overwrites) and does not check if the folder/bucket exists.
+     *
+     * Designed specifically for funnel.io which does not give LIST access to
+     * anything.
+     *
+     * @see write
+     */
+    public function writeWithoutListAccess($key, $content) 
+    {
+        self::assertValidKey($key);
+
+        $numBytes = $this->adapter->writeWithoutBucketExistsCheck($key, $content);
+
+        if (false === $numBytes) {
+            throw new \RuntimeException(sprintf('Could not write the "%s" key content.', $key));
+        }
+
+        return $numBytes;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function read($key)
