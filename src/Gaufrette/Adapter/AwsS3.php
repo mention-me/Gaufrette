@@ -127,6 +127,19 @@ class AwsS3 implements Adapter,
     public function write($key, $content)
     {
         $this->ensureBucketExists();
+
+        return $this->writeWithoutBucketExistsCheck($key, $content);
+    }
+
+    /* 
+     * This is exactly the same as `write`, but without checking for bucket
+     * existence first.
+     *
+     * We deliberately remove the ensureBucketExists for Cole Haan
+     * and Funnel.io. Funnel will not give us the LIST access and so
+     * this check will always fail.
+     */
+    public function writeWithoutBucketExistsCheck($key, $content) {
         $options = $this->getOptions($key, array('Body' => $content));
 
         /*
