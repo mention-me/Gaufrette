@@ -4,6 +4,7 @@ Gaufrette
 Gaufrette provides a filesystem abstraction layer.
 
 [![Build Status](https://img.shields.io/travis/KnpLabs/Gaufrette/master.svg?style=flat-square)](http://travis-ci.org/KnpLabs/Gaufrette)
+[![AppVeyor Status](https://img.shields.io/appveyor/ci/NiR-/Gaufrette/master.svg?style=flat-square)](https://ci.appveyor.com/project/NiR-/gaufrette)
 [![Quality Score](https://img.shields.io/scrutinizer/g/KnpLabs/Gaufrette.svg?style=flat-square)](https://scrutinizer-ci.com/g/KnpLabs/Gaufrette)
 [![Packagist Version](https://img.shields.io/packagist/v/KnpLabs/Gaufrette.svg?style=flat-square)](https://packagist.org/packages/KnpLabs/Gaufrette)
 [![Total Downloads](https://img.shields.io/packagist/dt/KnpLabs/Gaufrette.svg?style=flat-square)](https://packagist.org/packages/KnpLabs/Gaufrette)
@@ -17,7 +18,7 @@ Imagine you have to manage a lot of medias in a PHP project. Lets see how to
 take this situation in your advantage using Gaufrette.
 
 The filesystem abstraction layer permits you to develop your application without
-the need to know were all those medias will be stored and how.
+the need to know where all those medias will be stored and how.
 
 Another advantage of this is the possibility to update the files location
 without any impact on the code apart from the definition of your filesystem.
@@ -29,31 +30,51 @@ solution.
 
 Read the official [Gaufrette documentation](http://knplabs.github.io/Gaufrette/).
 
+### Metapackages for adapters
+
+Every maintained adapter now have a dedicated metapackage. You can [find the list on packagist](https://packagist.org/packages/gaufrette/). 
+**We highly recommend you to use them as they contain their own requirements**: you don't need to worry about third-party dependencies 
+to install before using Gaufrette anymore.
+
 ### Symfony integration
 
 Symfony integration is available through [KnpLabs/KnpGaufretteBundle](https://github.com/KnpLabs/KnpGaufretteBundle).
 
-### Setup the vendor libraries
+### Maintainers
 
-As some filesystem adapters use vendor libraries, you should install the vendors:
+Here is the list of dedicated maintainer(s) for every adapter not deprecated. If you don't receive any response to 
+your issue or pull request in a timely manner, ping us:
 
-    $ cd gaufrette
-    $ php composer.phar install
-    $ sh bin/configure_test_env.sh
+| Adapter            | Referent                    |
+|--------------------|-----------------------------|
+| AwsS3              | @NiR-                       |
+| AzureBlobStorage   | @NiR-                       |
+| DoctrineDbal       | @pedrotroller, @NicolasNSSM |
+| Flysystem          | @nicolasmure                |
+| Ftp                | @fabschurt                  |
+| GoogleCloudStorage | @AntoineLelaisant           |
+| GridFS             | @NiR-                       |
+| InMemory           |                             |
+| Local              |                             |
+| OpenCloud          | @NiR-                       |
+| PhpseclibSftp      | @fabschurt                  |
+| Zip                |                             |
 
-It will avoid skip a lot of tests.
+For `InMemory`, `Local` and `Zip` adapters everyone in this list is considered as a maintainer.
 
 ### Launch the Test Suite
 
-In the Gaufrette root directory:
+Requires:
+  * docker
+  * docker-compose
 
-To check if classes specification pass:
+Build images:
 
-    $ php bin/phpspec run
+    $ docker-compose build
 
-To check basic functionality of the adapters (adapters should be configured you will see many skipped tests):
+Launch the tests:
 
-    $ bin/phpunit
+    $ bin/tests-all
 
 Is it green?
 
